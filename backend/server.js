@@ -7,11 +7,14 @@ import userRouter from "./routes/userRoute.js";
 import "dotenv/config.js";
 import cartRouter from "./routes/cartRoute.js";
 import orderRouter from "./routes/orderRoute.js";
+import { fileURLToPath } from "url";
 
 // app config
 const app = express();
 const port = process.env.PORT || 5000;
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 // middleware
 app.use(express.json());
@@ -22,7 +25,7 @@ connectDB();
 
 // api endpoints
 app.use("/api/food", foodRouter);
-app.use("/uploads", express.static("uploads"));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/order",orderRouter)
